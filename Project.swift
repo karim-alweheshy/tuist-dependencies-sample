@@ -20,6 +20,29 @@ import ProjectDescriptionHelpers
 // MARK: - Project
 
 // Creates our project using a helper function defined in ProjectDescriptionHelpers
-let project = Project.app(name: "TuistDependenciesSample",
-                          platform: .iOS,
-                          additionalTargets: ["TuistDependenciesSampleKit", "TuistDependenciesSampleUI"])
+let infoPlist: [String: InfoPlist.Value] = [
+    "CFBundleShortVersionString": "1.0",
+    "CFBundleVersion": "1",
+    "UIMainStoryboardFile": "",
+    "UILaunchStoryboardName": "LaunchScreen"
+    ]
+let target = Target(
+    name: "TuistDependenciesSample",
+    platform: .iOS,
+    product: .app,
+    productName: "TuistDependenciesSample",
+    bundleId: "TuistDependenciesSample.com",
+    deploymentTarget: .iOS(targetVersion: "13.0", devices: .iphone),
+    infoPlist: .extendingDefault(with: infoPlist),
+    sources: "TuistDependenciesSample/Sources",
+    resources: "TuistDependenciesSample/Resources",
+    dependencies: [
+        .external(name: "MessageKit")
+    ]
+)
+
+let project = Project(
+    name: "TuistDependenciesSample",
+    organizationName: "tuist.io",
+    targets: [target]
+)
